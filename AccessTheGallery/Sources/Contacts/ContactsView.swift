@@ -35,10 +35,12 @@ class ContactsView: UIView {
         search.translatesAutoresizingMaskIntoConstraints = false
        return search
     }()
+    
     lazy var tableView: ComponentTableView = {
         let tableView = ComponentTableView(delegateClick: delegateTableView!)
         return tableView
     }()
+    
     lazy var noResultsLabel: UILabel = {
         let label = UILabel()
         label.text = "Nenhum Resultado"
@@ -47,6 +49,7 @@ class ContactsView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    
     lazy var noResultsLabelConstants: [NSLayoutConstraint] = {
         addSubview(noResultsLabel)
         let noResultsLabelConstants: [NSLayoutConstraint] = [
@@ -55,6 +58,7 @@ class ContactsView: UIView {
         ]
         return noResultsLabelConstants
     }()
+    
     func noHasSearchResult(result: Bool) {
         if result {
             NSLayoutConstraint.deactivate(noResultsLabelConstants)
@@ -67,22 +71,26 @@ class ContactsView: UIView {
         }
     }
 }
+
 extension ContactsView: ViewCodingProtocol {
     func buildViewHierarchy() {
         addSubview(searchBarContacts)
         addSubview(tableView)
     }
+    
     func setupConstraints() {
         NSLayoutConstraint.activate([
             searchBarContacts.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10),
             searchBarContacts.leftAnchor.constraint(equalTo: leftAnchor, constant: 10),
             searchBarContacts.rightAnchor.constraint(equalTo: rightAnchor, constant: -10),
+            
             tableView.topAnchor.constraint(equalTo: searchBarContacts.bottomAnchor, constant: 10),
             tableView.leftAnchor.constraint(equalTo: leftAnchor, constant: 10),
             tableView.rightAnchor.constraint(equalTo: rightAnchor, constant: -10),
             tableView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
+    
     func additionalSettings() {
         self.backgroundColor = .white
     }

@@ -25,6 +25,7 @@
 		52BD1E0F2878C0EB00965282 /* AddContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BD1E0E2878C0EB00965282 /* AddContactsViewController.swift */; };
 		52BD1E112878C13D00965282 /* AddContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BD1E102878C13D00965282 /* AddContactsView.swift */; };
 		52BD1E132878C1E400965282 /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BD1E122878C1E400965282 /* UITextField+.swift */; };
+		52BD1E162878C49A00965282 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BD1E152878C49A00965282 /* String+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,7 @@
 		52BD1E0E2878C0EB00965282 /* AddContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactsViewController.swift; sourceTree = "<group>"; };
 		52BD1E102878C13D00965282 /* AddContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactsView.swift; sourceTree = "<group>"; };
 		52BD1E122878C1E400965282 /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
+		52BD1E152878C49A00965282 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,10 +155,19 @@
 		52BD1E142878C1E900965282 /* Infrastructure */ = {
 			isa = PBXGroup;
 			children = (
+				52BD1E172878C4A000965282 /* Extensions */,
 				52BD1E022878BAAB00965282 /* ViewCodingProtocol.swift */,
-				52BD1E122878C1E400965282 /* UITextField+.swift */,
 			);
 			path = Infrastructure;
+			sourceTree = "<group>";
+		};
+		52BD1E172878C4A000965282 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				52BD1E122878C1E400965282 /* UITextField+.swift */,
+				52BD1E152878C49A00965282 /* String+.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -240,6 +251,7 @@
 				52BD1E032878BAAB00965282 /* ViewCodingProtocol.swift in Sources */,
 				52BD1E0D2878C02C00965282 /* TableViewMethodsProtocol.swift in Sources */,
 				52BD1DE52878AF3700965282 /* ContactViewController.swift in Sources */,
+				52BD1E162878C49A00965282 /* String+.swift in Sources */,
 				52BD1E112878C13D00965282 /* AddContactsView.swift in Sources */,
 				52BD1DF82878B4BC00965282 /* Coordinator.swift in Sources */,
 				52BD1DE12878AF3700965282 /* AppDelegate.swift in Sources */,

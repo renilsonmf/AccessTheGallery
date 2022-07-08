@@ -148,28 +148,35 @@ extension AddContactsView: ViewCodingProtocol {
             addContactButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10),
             addContactButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -10),
             addContactButton.heightAnchor.constraint(equalToConstant: 40),
+            
             profileView.topAnchor.constraint(equalTo: addContactButton.bottomAnchor, constant: 10),
             profileView.centerXAnchor.constraint(equalTo: centerXAnchor),
             profileView.widthAnchor.constraint(equalToConstant: 200),
             profileView.heightAnchor.constraint(equalToConstant: 200),
+            
             profileImage.topAnchor.constraint(equalTo: profileView.topAnchor),
             profileImage.leftAnchor.constraint(equalTo: profileView.leftAnchor),
             profileImage.rightAnchor.constraint(equalTo: profileView.rightAnchor),
             profileImage.bottomAnchor.constraint(equalTo: profileView.bottomAnchor),
+            
             addImageButton.topAnchor.constraint(equalTo: profileView.bottomAnchor),
             addImageButton.centerXAnchor.constraint(equalTo: centerXAnchor),
             addImageButton.heightAnchor.constraint(equalToConstant: 30),
+            
             cardInfoView.topAnchor.constraint(equalTo: addImageButton.bottomAnchor, constant: 15),
             cardInfoView.leftAnchor.constraint(equalTo: leftAnchor),
             cardInfoView.rightAnchor.constraint(equalTo: rightAnchor),
+            
             nameTextField.topAnchor.constraint(equalTo: cardInfoView.topAnchor),
             nameTextField.leftAnchor.constraint(equalTo: cardInfoView.leftAnchor, constant: 10),
             nameTextField.rightAnchor.constraint(equalTo: cardInfoView.rightAnchor),
             nameTextField.heightAnchor.constraint(equalToConstant: 40),
+            
             lastNameTextField.topAnchor.constraint(equalTo: nameTextField.bottomAnchor, constant: 1),
             lastNameTextField.leftAnchor.constraint(equalTo: cardInfoView.leftAnchor, constant: 10),
             lastNameTextField.rightAnchor.constraint(equalTo: cardInfoView.rightAnchor),
             lastNameTextField.heightAnchor.constraint(equalToConstant: 40),
+            
             cellNumberTextField.topAnchor.constraint(equalTo: lastNameTextField.bottomAnchor, constant: 1),
             cellNumberTextField.leftAnchor.constraint(equalTo: cardInfoView.leftAnchor, constant: 10),
             cellNumberTextField.rightAnchor.constraint(equalTo: cardInfoView.rightAnchor),
@@ -177,21 +184,9 @@ extension AddContactsView: ViewCodingProtocol {
             cellNumberTextField.heightAnchor.constraint(equalToConstant: 40),
         ])
     }
+    
     func additionalSettings() {
         self.backgroundColor = .systemGray5
         setupAddTargetIsNotEmptyTextFields()
-    }
-}
-extension String {
-    func applyPatternOnNumbers(pattern: String, replacementCharacter: Character) -> String {
-        var pureNumber = self.replacingOccurrences( of: "[^0-9]", with: "", options: .regularExpression)
-        for index in 0 ..< pattern.count {
-            guard index < pureNumber.count else { return pureNumber }
-            let stringIndex = String.Index(utf16Offset: index, in: pattern)
-            let patternCharacter = pattern[stringIndex]
-            guard patternCharacter != replacementCharacter else { continue }
-            pureNumber.insert(patternCharacter, at: stringIndex)
-        }
-        return pureNumber
     }
 }

@@ -14,11 +14,13 @@ protocol TableViewMethodsProtocol: NSObject {
     func swipeLeftToRightDelegate(indexPath: IndexPath) -> UISwipeActionsConfiguration
     func swipeRightToLeftDelegate(indexPath: IndexPath, tableView: UITableView) -> UISwipeActionsConfiguration
 }
+
 ///Methods optional
 extension TableViewMethodsProtocol {
     func didTapIndexRowDelegate() {
         //
     }
+    
     func swipeLeftToRightDelegate(indexPath: IndexPath) -> UISwipeActionsConfiguration {
         return UISwipeActionsConfiguration()
     }

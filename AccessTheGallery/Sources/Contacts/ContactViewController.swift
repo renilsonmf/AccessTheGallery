@@ -9,12 +9,14 @@ import Foundation
 import UIKit
 import CoreData
 class ContactViewController: UIViewController {
+    
     var contactView: ContactsView?
     var isSearch: Bool = false
     var contextContacts: NSManagedObjectContext!
     var contactsList: [NSManagedObject] = []
     var contactFixed: [NSManagedObject] = []
     var filteredListContacts: [NSManagedObject] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Contatos"
