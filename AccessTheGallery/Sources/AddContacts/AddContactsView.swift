@@ -18,6 +18,7 @@ class AddContactsView: UIView {
         super.init(frame:frame)
         setupView()
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -38,12 +39,14 @@ class AddContactsView: UIView {
         addButton.addTarget(self, action: #selector(actionAddContactButton), for: .touchUpInside)
         return addButton
     }()
+    
     lazy var profileView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 100
         return view
     }()
+    
     lazy var profileImage: UIImageView = {
         let img = UIImageView()
         img.translatesAutoresizingMaskIntoConstraints = false
@@ -53,6 +56,7 @@ class AddContactsView: UIView {
         img.image = UIImage(named: "profile")
         return img
     }()
+    
     //MARK: Button select image
     lazy var addImageButton: UIButton = {
         let buttonSelect = UIButton()
@@ -62,6 +66,7 @@ class AddContactsView: UIView {
         buttonSelect.addTarget(self, action: #selector(actionAddImageButton), for: .touchUpInside)
         return buttonSelect
     }()
+    
     lazy var cardInfoView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -70,6 +75,7 @@ class AddContactsView: UIView {
         view.layer.borderColor = UIColor.systemGray3.cgColor
         return view
     }()
+    
     lazy var nameTextField: UITextField = {
         let myTextField = UITextField()
         myTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -79,6 +85,7 @@ class AddContactsView: UIView {
         myTextField.setBottomBorder(color: UIColor.systemGray3.cgColor)
         return myTextField
     }()
+    
     lazy var lastNameTextField: UITextField = {
         let myTextField = UITextField()
         myTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -88,6 +95,7 @@ class AddContactsView: UIView {
         myTextField.setBottomBorder(color: UIColor.systemGray3.cgColor)
         return myTextField
     }()
+    
     lazy var cellNumberTextField: UITextField = {
         let myTextField = UITextField()
         myTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -96,25 +104,31 @@ class AddContactsView: UIView {
         myTextField.textColor = .black
         return myTextField
     }()
+    
     //MARK: - Action Buttons
     @objc func actionCancellButton() {
         delegateSelectButton?.didTapCancellButton()
     }
+    
     @objc func actionAddImageButton() {
         delegateSelectButton?.didTapAddImageButton()
     }
+    
     @objc func actionAddContactButton() {
         delegateSelectButton?.didTapButtonAddContact()
     }
+    
     func setupAddTargetIsNotEmptyTextFields() {
         nameTextField.addTarget(self, action: #selector(textFieldsIsNotEmpty), for: .editingChanged)
         lastNameTextField.addTarget(self, action: #selector(textFieldsIsNotEmpty),for: .editingChanged)
         cellNumberTextField.addTarget(self, action: #selector(cellNumberTextFieldAction),for: .editingChanged)
     }
+    
     @objc func cellNumberTextFieldAction(text: UITextField) {
         guard let cellNumber = cellNumberTextField.text else { return }
         cellNumberTextField.text = cellNumber.applyPatternOnNumbers(pattern: "(##) #####-####", replacementCharacter: "#")
     }
+    
     @objc func textFieldsIsNotEmpty(sender: UITextField) {
         ///Desconsidera o espaço
         sender.text = sender.text?.trimmingCharacters(in: .whitespaces)
@@ -128,6 +142,7 @@ class AddContactsView: UIView {
         }
     }
 }
+
 extension AddContactsView: ViewCodingProtocol {
     func buildViewHierarchy() {
         addSubview(addContactButton)
@@ -140,6 +155,7 @@ extension AddContactsView: ViewCodingProtocol {
         cardInfoView.addSubview(lastNameTextField)
         cardInfoView.addSubview(cellNumberTextField)
     }
+    
     func setupConstraints() {
         NSLayoutConstraint.activate([
             cancellButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 10),

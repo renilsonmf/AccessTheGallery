@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import CoreData
+
 class ContactViewController: UIViewController {
     
     var contactView: ContactsView?
@@ -20,23 +21,31 @@ class ContactViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Contatos"
-        contactView?.tableView.reloadData()
         createButtonAdd()
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         contextContacts = appDelegate.persistentContainer.viewContext
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        contactView?.tableView.reloadData()
+    }
+    
     override func loadView() {
         makeView()
         self.view = contactView
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         listContactsAdded()
         self.contactView?.tableView.reloadData()
     }
+    
     func makeView() {
         contactView = ContactsView(delegateTableView: self, delegateSearchBar: self)
     }
+    
     func createButtonAdd() {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .add,
@@ -44,11 +53,13 @@ class ContactViewController: UIViewController {
             action: #selector(actionButtonAdd)
         )
     }
+    
     @objc func actionButtonAdd() {
         let controller = AddContactsViewController()
         controller.modalPresentationStyle = .formSheet
         present(controller, animated: true, completion: nil)
     }
+    
     func listContactsAdded(){
         let requisicao = NSFetchRequest<NSFetchRequestResult>(entityName: "Contacts")
         do {
@@ -59,19 +70,23 @@ class ContactViewController: UIViewController {
         }
     }
 }
+
 extension ContactViewController: UISearchBarDelegate {
     ///Clique no textfield do seacr
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         isSearch = true
     }
+    
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
         isSearch = false
     }
+    
     ///Clique no enter do teclado
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         isSearch = true
     }
+    
     ///Pega o que esta sendo digitado
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.count == 0 {
@@ -101,6 +116,7 @@ extension ContactViewController: UISearchBarDelegate {
         }
     }
 }
+
 extension ContactViewController: TableViewMethodsProtocol {
     func numberOfRowsInSectionDelegate() -> Int {
         if isSearch {
@@ -109,9 +125,9 @@ extension ContactViewController: TableViewMethodsProtocol {
             return contactsList.count
         }
     }
-    func cellForRowAtDelegate(tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! CustomCell
-        if isSearch {
+    
+    func isSearch(_ value: Bool, indexPath: IndexPath, cell: CustomCell) {
+        if value {
             let contactsFiltered = self.filteredListContacts[indexPath.row]
             let imageFiltered = contactsFiltered.value(forKey: "imageProfile") as! Data
             let lastNameFiltered = contactsFiltered.value(forKey: "lastName") as! String
@@ -121,19 +137,29 @@ extension ContactViewController: TableViewMethodsProtocol {
                                    name: firtNameFiltered,
                                    lastName: lastNameFiltered,
                                    cellNumber: cellNumberFiltered)
-        } else {
+        }else {
             let contacts = self.contactsList[indexPath.row]
-            let imageContact = contacts.value(forKey: "imageProfile")
+            let imageContact = contacts.value(forKey: "imageProfile") as! Data
             let lastNameContact = contacts.value(forKey: "lastName") as! String
             let firtNameContact = contacts.value(forKey: "name") as! String
             let cellNumberContact = contacts.value(forKey: "cellNumber") as! String
-            cell.setupCellContacts(dataImage: imageContact as! Data,
+            cell.setupCellContacts(dataImage: imageContact,
                                    name: firtNameContact,
                                    lastName: lastNameContact,
                                    cellNumber: cellNumberContact)
         }
+    }
+    
+    func cellForRowAtDelegate(tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CustomCell", for: indexPath) as! CustomCell
+        if isSearch {
+            isSearch(true, indexPath: indexPath, cell: cell)
+        } else {
+            isSearch(false, indexPath: indexPath, cell: cell)
+        }
         return cell
     }
+    
     func swipeRightToLeftDelegate(indexPath: IndexPath, tableView: UITableView) -> UISwipeActionsConfiguration {
         let actionDelete = UIContextualAction(style: .destructive,
                                               title: "Deletar") { [weak self] (action, view, completionHandler) in
@@ -144,6 +170,7 @@ extension ContactViewController: TableViewMethodsProtocol {
         actionDelete.image = UIImage(systemName: "trash")
         return UISwipeActionsConfiguration(actions: [actionDelete])
     }
+    
     func swipeLeftToRightDelegate(indexPath: IndexPath) -> UISwipeActionsConfiguration {
         let actionFavorite = UIContextualAction(style: .normal,
                                                 title: "Fixar") { [weak self] (action, view, completionHandler) in
@@ -154,6 +181,7 @@ extension ContactViewController: TableViewMethodsProtocol {
         actionFavorite.backgroundColor = .systemBlue
         return UISwipeActionsConfiguration(actions: [actionFavorite])
     }
+    
     ///Action swift  right to left
     private func handleDelete(indexPath: IndexPath, tableView: UITableView) {
         let indice = indexPath.row
@@ -171,6 +199,7 @@ extension ContactViewController: TableViewMethodsProtocol {
             print("Erro ao remover item \(erro)")
         }
     }
+    
     ///Action swipe left to right
     private func handleMarkAsFixed(indexPath: IndexPath) {
         let contacts = self.contactsList[indexPath.row]
